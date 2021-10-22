@@ -1,12 +1,29 @@
 const form = document.querySelector( 'form');
 const taskInput = document.querySelector('#task');
+const tasksList = document.querySelector( '.collection');
+
 
 form.addEventListener('submit', addTask);
+tasksList.addEventListener('click', deleteTask);
+
+
+function deleteTask(e) {
+
+    if (e.target.textContent == 'x') {
+        if(confirm("Are you sure?")) {
+            e.target.parentElement.remove();
+
+        }
+    }
+
+}
 
 // e - event, param -- so func can access information outside
 function addTask (e) {
+
     // input value
     const task = taskInput.value;
+
     // create <li> element
     const li = document.createElement('li');
     // define <li> CSS class
@@ -15,13 +32,28 @@ function addTask (e) {
     const text= document.createTextNode(task);
     // add text value <li>
     li.appendChild(text);
+
+    // create link element
+    const link = document.createElement( 'a');
+    // link href attribute
+    link.setAttribute( 'href', '#');
+    // add css style
+    link.className = 'secondary-content';
+    // add X text to link
+    link.appendChild(document.createTextNode( 'x'));
+    // add link to <li>
+    li.appendChild(link);
+
     // find <ul> DOM component
     const ul = document.querySelector( '.collection');
     // add value to <ul>
     ul.appendChild(li);
-    // '' terminated
+    // form submit event control
     taskInput.value = '';
 
     e.preventDefault();
 
 }
+
+
+
