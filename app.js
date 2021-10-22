@@ -1,15 +1,22 @@
 const form = document.querySelector( 'form');
 const taskInput = document.querySelector('#task');
 const tasksList = document.querySelector( '.collection');
-
+const delTasksBtn = document.querySelector( '#del-tasks');
 
 form.addEventListener('submit', addTask);
 tasksList.addEventListener('click', deleteTask);
+delTasksBtn.addEventListener( 'click', deleteTasks);
 
+function deleteTasks() {
+    // tasksList.innerHTML = '';
+    while(tasksList.firstChild) {
+        tasksList.removeChild(tasksList.firstChild);
+    }
 
+}
 function deleteTask(e) {
 
-    if (e.target.textContent == 'x') {
+    if (e.target.textContent == 'X') {
         if(confirm("Are you sure?")) {
             e.target.parentElement.remove();
 
@@ -17,7 +24,6 @@ function deleteTask(e) {
     }
 
 }
-
 // e - event, param -- so func can access information outside
 function addTask (e) {
 
