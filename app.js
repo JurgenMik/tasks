@@ -14,18 +14,36 @@ function deleteTasks() {
     }
 
 }
-function deleteTask(e) {
-
-    if (e.target.textContent == 'X') {
-        if(confirm("Are you sure?")) {
-            e.target.parentElement.remove();
+function deleteTask(event){
+    if (event.target.textContent === 'X'){
+        if(confirm('Are you sure?')){
+            event.target.parentElement.remove();
+            task = event.target.parentElement.firstChild.textContent;
+            deleteTaskFromLocalStorage(task);
 
         }
     }
 
 }
+
+function deleteTaskFromLocalStorage(task){
+    let tasks;
+    if(localStorage.getItem('tasks') === null){
+        tasks = [];
+    } else {
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+    tasks.forEach(function(tasksElement,index){
+        if(tasksElement === task){
+            tasks.splice(index, 1);
+        }
+    });
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
 // e - event, param -- so func can access information outside
-function addTask (e) {
+function addTask (event) {
 
     // input value
     const task = taskInput.value;
@@ -46,7 +64,7 @@ function addTask (e) {
     // add css style
     link.className = 'secondary-content';
     // add X 'text content' to link
-    link.appendChild(document.createTextNode( 'x'));
+    link.appendChild(document.createTextNode( 'X'));
     // add link <a> to <li>
     li.appendChild(link);
 
@@ -57,7 +75,7 @@ function addTask (e) {
     // Save Task
     addTaskToLocalStorage(task);
     taskInput.value = '';
-    e.preventDefault();
+    event.preventDefault();
 
 }
 
@@ -70,7 +88,6 @@ function addTaskToLocalStorage(task) {
     }
     tasks.push(task);
     localStorage.setItem('tasks', JSON.stringify(tasks));
-
 }
 
 
