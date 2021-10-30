@@ -13,7 +13,19 @@ function deleteTasks() {
         tasksList.removeChild(tasksList.firstChild);
     }
 
+    deleteAllTaskFromLocalStorage();
 }
+
+function deleteAllTaskFromLocalStorage(){
+    //localStorage.clear();
+    if(localStorage.getItem('tasks') === null){
+        let tasks = [];
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    localStorage.removeItem('tasks')
+}
+
 function deleteTask(event){
     if (event.target.textContent === 'X'){
         if(confirm('Are you sure?')){
