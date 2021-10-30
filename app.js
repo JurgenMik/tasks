@@ -1,11 +1,43 @@
+//events elements
 const form = document.querySelector( 'form');
 const taskInput = document.querySelector('#task');
 const tasksList = document.querySelector( '.collection');
 const delTasksBtn = document.querySelector( '#del-tasks');
 
+// events
 form.addEventListener('submit', addTask);
 tasksList.addEventListener('click', deleteTask);
 delTasksBtn.addEventListener( 'click', deleteTasks);
+document.addEventListener('DOMContentLoaded', getTasksFromLocalStorage);
+
+function getTasksFromLocalStorage(){
+    let tasks;
+    if(localStorage.getItem('tasks') === null){
+        tasks = [];
+    } else {
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+    tasks.forEach(function(tasksElement){
+
+        const li = document.createElement('li');
+        li.className = "collection-item";
+
+        const text= document.createTextNode(tasksElement);
+        li.appendChild(text);
+
+        const link = document.createElement( 'a');
+        link.setAttribute( 'href', '#');
+
+        link.className = 'secondary-content';
+        link.appendChild(document.createTextNode( 'X'));
+        li.appendChild(link);
+
+        // Add li to <ul>
+        const ul = document.querySelector( '.collection');
+        ul.appendChild(li);
+    });
+}
+
 
 function deleteTasks() {
     // tasksList.innerHTML = '';
