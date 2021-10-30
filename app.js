@@ -45,19 +45,31 @@ function addTask (e) {
     link.setAttribute( 'href', '#');
     // add css style
     link.className = 'secondary-content';
-    // add X text to link
+    // add X 'text content' to link
     link.appendChild(document.createTextNode( 'x'));
-    // add link to <li>
+    // add link <a> to <li>
     li.appendChild(link);
 
-    // find <ul> DOM component
+    // Add li to <ul>
     const ul = document.querySelector( '.collection');
-    // add value to <ul>
     ul.appendChild(li);
-    // form submit event control
-    taskInput.value = '';
 
+    // Save Task
+    addTaskToLocalStorage(task);
+    taskInput.value = '';
     e.preventDefault();
+
+}
+
+function addTaskToLocalStorage(task) {
+    let tasks; 
+    if(localStorage.getItem('tasks') === null) {
+        tasks = [];
+    } else {
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 
 }
 
